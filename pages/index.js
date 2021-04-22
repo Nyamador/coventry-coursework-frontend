@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import ActionLink from '../components/ActionLink'
+import UserGreeting from '../components/UserGreeting'
 
 
 const routes = [
@@ -32,10 +33,7 @@ const routes = [
 export default function Home() {
   return (
     <div className="h-screen">
-          <section className="w-10/12 m-auto p-10 text-center flex-row">
-            <h1 className="text-2xl">Welcome, <strong>Desmond</strong></h1>
-          </section>
-
+          <UserGreeting/>
           <section className="grid grid-cols-4 w-10/12 m-auto shadow-md rounded-md">
               {routes.map(route => <ActionLink key={route.id} name={route.name} image={route.logo} href={route.route}/>)}
           </section>
