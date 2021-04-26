@@ -1,42 +1,58 @@
-import Head from 'next/head'
 import ActionLink from '../components/ActionLink'
 import UserGreeting from '../components/UserGreeting'
 
 
-const routes = [
+export const routes = [
   {
     name: "Pay Fees",
     logo: "/pay-fees.svg",
-    route: "fees/",
+    route: "/fees",
     id: 1
   },
   {
     name: "School Supplies",
     logo: "/shop.svg",
-    route: "shop/",
+    route: "/shop",
     id: 2
   },
   {
     name: "Request Refund",
     logo: "/refund.svg",
-    route: "refund-request/",
+    route: "/refund-request",
     id: 3
   },
   {
     name: "Transaction History",
     logo: "/transactions.svg",
-    route: "transactions/",
+    route: "/transactions",
     id: 4
   }  
 ]
 
 export default function Home() {
   return (
-    <div className="h-screen">
-          <UserGreeting/>
-          <section className="grid grid-cols-4 w-10/12 m-auto shadow-md rounded-md">
-              {routes.map(route => <ActionLink key={route.id} name={route.name} image={route.logo} href={route.route}/>)}
-          </section>
+    <>
+    <main className="h-screen bg-gray-100">
+    <nav className="bg-white border-b">
+                <UserGreeting/>
+    </nav>
+
+    <div className="flex flex-row">
+          <aside className="flex flex-col justify-center w-1/12 bg-white border-r">
+            {routes.map(route => <ActionLink key={route.id} name={route.name} image={route.logo} href={route.route}/>)}
+          </aside>
+
+          <div className="w-11/12 flex flex-col">
+                <section className="">
+                </section>
+          </div>
     </div>
+
+    </main>
+      <Notification>
+        <p>dsfdf</p>
+      </Notification>
+    </>
   )
 }
+
