@@ -5,7 +5,7 @@ import Image from 'next/image'
 const ActionLink = ({name, href, image}) => {
     return (
         <Link href={href}>
-            <a className="flex flex-col text-center items-center p-4 text-xs mb-6 hover:bg-gray-100 h-full">
+            <a className="flex flex-col text-center items-center p-4 text-xs justify-center hover:bg-gray-100 h-full">
                 <div className="flex flex-row justify-center">
                         <Image src={image} width='30px' height='30px'/>
                 </div>

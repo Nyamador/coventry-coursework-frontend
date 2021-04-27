@@ -54,3 +54,8 @@ a {
   font-style: normal;
   font-display: swap;
 }
+
+
+button:active{
+  transform: scale(0.99);
+}

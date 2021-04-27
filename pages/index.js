@@ -1,5 +1,6 @@
 import ActionLink from '../components/ActionLink'
 import UserGreeting from '../components/UserGreeting'
+import Snackbar from '../components/Snackbar'
 
 
 export const routes = [
@@ -49,9 +50,9 @@ export default function Home() {
     </div>
 
     </main>
-      <Notification>
+      <Snackbar>
         <p>dsfdf</p>
-      </Notification>
+      </Snackbar>
     </>
   )
 }

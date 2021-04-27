@@ -52,19 +52,19 @@ const Fees = () => {
             </nav>
 
             <div className="flex flex-row">
-                    <aside className="flex flex-col justify-center w-1/12 bg-white border-r">
+                    <aside className="flex flex-col justify-center w-1/12 bg-white border-r h-screen">
                         {routes.map(route => <ActionLink key={route.id} name={route.name} image={route.logo} href={route.route}/>)}
                     </aside>
 
-                    <div className="w-11/12 flex flex-col">
+                    <div className="w-11/12 flex flex-col h-screen">
                         <section className="w-5/12 m-auto p-4">
                             <form>
                             <InputElement onChange={(e) => setFormData({...formData, customer_name: e.target.value})} name="name" label="Fullname"/>
                             <InputElement onChange={(e) => setFormData({...formData, customer_email: e.target.value})} type="email" name="email" label="Email"/>
                             <InputElement onChange={(e) => setFormData({...formData, customer_mobile: e.target.value})} type="tel" name="mobile" label="Mobile Number"/>
                             <InputElement onChange={(e) => setFormData({...formData, amount: e.target.value})} name="amount" type="number" label="Amount"/>
-                            <button className="" onClick={handleSubmit}>
-                                {isLoading ? "Pay Fees" : <Image src="/loading.svg" height="20px" width="auto"/>}
+                            <button className="bg-black text-white p-2 rounded-md w-full" onClick={handleSubmit}>
+                                {!isLoading ? "Pay Fees" : <Image src="/loading.svg" height="20px" width="auto"/>}
                             </button>
                             </form>
                         </section>

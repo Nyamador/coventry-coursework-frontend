@@ -1,6 +1,8 @@
 import UserGreeting from '../components/UserGreeting'
 import {routes} from './index'
 import ActionLink from '../components/ActionLink'
+import ProductCard from '../components/ProductCard'
+import schoolSupplies from '../constants/get_data'
 
 const shop = () => {
     return (
@@ -15,7 +17,10 @@ const shop = () => {
             </aside>
 
             <div className="w-11/12 flex flex-col">
-                    <section className="">
+                    <section className="grid grid-cols-2 p-4 mt-10">
+                        {
+                            schoolSupplies.map( item =>  <ProductCard imageUrl={item.image} name={item.name} key={item.id} price={item.price} />)
+                        }                       
                     </section>
             </div>
         </div>  
