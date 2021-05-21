@@ -6,43 +6,67 @@ import ActionLink from '../components/ActionLink'
 import Snackbar from '../components/Snackbar'
 import Image from 'next/image'
 import {routes} from './index'
+import students from '../students'
 
 const Fees = () => {
     const [formData, setFormData] = React.useState({
-        amount: 0,
-        customer_name: "",
-        customer_email: "",
-        customer_mobile: "",
-        success_url: "http://locahost:3000/success",
-        error_url: "http://localhost:3000/error"
+        indexNumber: "",
+        amountToPay: ""
     });
     const [isLoading, setIsLoading] = React.useState(false);
     const [showSnackBar, setShowSnackBar] = React.useState(false)
     const [errorText, setErrorText] = React.useState("An error occurred...")
 
+    const handleSnackBarToggle = () => {
+        setShowSnackBar(true)
+        setTimeout(() => {
+            setShowSnackBar(false)
+        }, 2000)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true)
-        fetch('http://localhost:8000/api/v1/links/',
-        {
-            method:  'POST',
-            headers: {
-                'Authorization': 'Token 11fd430bb58258c46f656613074376c8f17dfbdc',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            setIsLoading(false)
-            console.log(data)}
-        )
-        .catch(error =>{
-            setIsLoading(false)
-             console.error(error)
-            })
 
-        console.log(passwordHasher("24012001"))
+        
+        if(students.hasOwnProperty(formData.indexNumber)){
+            const student = students[formData.indexNumber]
+
+            let paymentData = {
+                amount : formData.amountToPay,
+                error_url: "/",
+                success_url: "",
+                customer_email: student.email,
+                customer_mobile: student.mobile,
+                customer_name: student.name,
+            }
+            var reqHeaders = new Headers();
+            reqHeaders.append("Authorization", "df15dd8100e07cba1d432b48a6a21743fe9de497");
+            reqHeaders.append("Content-Type", "application/json");
+
+            fetch('http://localhost:8000/_api/links.php',
+            {
+                method:  'POST',
+                headers: reqHeaders,
+                body: JSON.stringify(paymentData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                setIsLoading(false)
+                window.location = `${data.link}&ext=${formData.indexNumber}`;
+            })
+            .catch(error => {
+                setIsLoading(false)
+                 console.error(error)
+            });
+        }else{
+            setErrorText(`Student with id ${formData.indexNumber} does not exist`)
+            setIsLoading(false)
+            handleSnackBarToggle()
+        }
+
+
+
     }
 
     return (
@@ -59,12 +83,10 @@ const Fees = () => {
                     <div className="w-11/12 flex flex-col h-screen">
                         <section className="w-5/12 m-auto p-4">
                             <form>
-                            <InputElement onChange={(e) => setFormData({...formData, customer_name: e.target.value})} name="name" label="Fullname"/>
-                            <InputElement onChange={(e) => setFormData({...formData, customer_email: e.target.value})} type="email" name="email" label="Email"/>
-                            <InputElement onChange={(e) => setFormData({...formData, customer_mobile: e.target.value})} type="tel" name="mobile" label="Mobile Number"/>
-                            <InputElement onChange={(e) => setFormData({...formData, amount: e.target.value})} name="amount" type="number" label="Amount"/>
+                            <InputElement required  onChange={(e) => setFormData({...formData, indexNumber: e.target.value})} name="index_number" label="Enter Your Index Number"/>
+                            <InputElement required onChange={(e) => setFormData({...formData, amountToPay: e.target.value})} name="amount_to_pay" label="Amount To Pay"/>
                             <button className="bg-black text-white p-2 rounded-md w-full" onClick={handleSubmit}>
-                                {!isLoading ? "Pay Fees" : <Image src="/loading.svg" height="20px" width="auto"/>}
+                                {!isLoading ? "Proceed To Payment" : <Image src="/loading.svg" height="20px" width="auto"/>}
                             </button>
                             </form>
                         </section>
@@ -74,6 +96,8 @@ const Fees = () => {
                         </Snackbar>
                     </div>  
             </div>
+
+
         </main>
 
     );

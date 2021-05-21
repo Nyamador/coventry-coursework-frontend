@@ -1,6 +1,8 @@
+import {useEffect} from 'react'
 import ActionLink from '../components/ActionLink'
 import UserGreeting from '../components/UserGreeting'
 import Snackbar from '../components/Snackbar'
+import {useRouter} from 'next/router'
 
 
 export const routes = [
@@ -22,15 +24,22 @@ export const routes = [
     route: "/refund-request",
     id: 3
   },
-  {
-    name: "Transaction History",
-    logo: "/transactions.svg",
-    route: "/transactions",
-    id: 4
-  }  
+  // {
+  //   name: "Transaction History",
+  //   logo: "/transactions.svg",
+  //   route: "/transactions",
+  //   id: 4
+  // }  
 ]
 
 export default function Home() {
+
+  const router = useRouter();
+  
+  useEffect(() => {
+      router.push('/fees');
+  }, [])
+
   return (
     <>
     <main className="h-screen bg-gray-100">
